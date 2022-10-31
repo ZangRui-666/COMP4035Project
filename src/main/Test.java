@@ -57,6 +57,30 @@ public class Test {
         tree.put("il", 1);
         tree.put("ik", 1);
         tree.put("ir", 1);
+        tree.put("eo", 1);
+        tree.put("ea", 1);
+        tree.put("ec", 1);
+        tree.put("eb", 1);
+        tree.put("ep", 1);
+        tree.put("el", 1);
+        tree.put("ek", 1);
+        tree.put("er", 1);
+        tree.put("jo", 1);
+        tree.put("ja", 1);
+        tree.put("jc", 1);
+        tree.put("jb", 1);
+        tree.put("jp", 1);
+        tree.put("jl", 1);
+        tree.put("jk", 1);
+        tree.put("jr", 1);
+        tree.put("ko", 1);
+        tree.put("ka", 1);
+        tree.put("kc", 1);
+        tree.put("kb", 1);
+        tree.put("kp", 1);
+        tree.put("kl", 1);
+        tree.put("kk", 1);
+        tree.put("kr", 1);
         System.out.println(tree);
 
 

@@ -39,6 +39,8 @@ public class InternalNode extends Node {
         if (child.isOverFlow()) {
             Node siblingNode = child.split();
             insertChild(siblingNode);
+            if (child instanceof InternalNode)
+                child.keys.remove(child.size() - 1);
         }
         if (tree.root.isOverFlow()) {
             Node siblingNode = split();
