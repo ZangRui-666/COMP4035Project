@@ -43,7 +43,8 @@ public class InternalNode extends Node {
         if (tree.root.isOverFlow()) {
             Node siblingNode = split();
             InternalNode newRoot = new InternalNode();
-            newRoot.keys.add(siblingNode.getFirstKey());
+            newRoot.keys.add(keys.get(size()-1));
+            this.keys.remove(size()-1);
             newRoot.children.addAll(Arrays.asList(this, siblingNode));
             tree.setRoot(newRoot);
         }
@@ -86,9 +87,9 @@ public class InternalNode extends Node {
 
     @Override
     Node split() {
-        int from = size() / 2, to = size();
+        int from = size() / 2 + 1, to = size();
         List<String> subKeys = keys.subList(from, to);
-        List<Node> subChildren = children.subList(from, to);
+        List<Node> subChildren = children.subList(from, to + 1);
         InternalNode siblingNode = new InternalNode(subKeys, subChildren);
         subKeys.clear();
         subChildren.clear();
