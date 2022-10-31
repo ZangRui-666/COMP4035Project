@@ -32,7 +32,7 @@ public class InternalNode extends Node {
 
     @Override
     void putVal(String key, int value, BPlusTree tree) {
-        int pos = Collections.binarySearch(keys, key);
+        int pos = Utils.binarySearch(keys, key);
         int childPos = pos >= 0 ? pos : Math.min(-pos, size()) - 1;
         Node child = getChild(childPos);
         child.putVal(key, value, tree);

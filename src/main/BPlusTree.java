@@ -14,27 +14,9 @@ public class BPlusTree {
      */
     public Node root;
 
-    /**
-     * B+树的阶数, 阶数影响每个节点能够存放的关键字的个数以及孩子节点的个数
-     */
-    private final int order;
-
-    /**
-     * 当构造方法中未指定阶数时, 使用的默认阶数
-     */
-    private static final int DEFAULT_ORDER = 3;
 
     public BPlusTree() {
-        this(DEFAULT_ORDER);
-    }
-
-    public BPlusTree(int order) {
         root = new LeafNode();
-        if (order >= 3) {
-            this.order = order;
-        } else {
-            throw new IllegalArgumentException("order should be not less than 3");
-        }
     }
 
     @Override

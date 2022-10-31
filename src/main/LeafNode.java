@@ -9,6 +9,7 @@ import java.util.List;
 public class LeafNode extends Node {
     List<Integer> values;
     LeafNode next;
+    LeafNode previous;
 
     public LeafNode() {
         super();
@@ -29,7 +30,7 @@ public class LeafNode extends Node {
 
     @Override
     void putVal(String key, int value, BPlusTree tree) {
-        int pos = Collections.binarySearch(keys, key);
+        int pos = Utils.binarySearch(keys, key);
         if (pos >= 0) {
             values.set(pos, value);
             return;
@@ -37,10 +38,10 @@ public class LeafNode extends Node {
         int insertPos = -pos - 1;
         keys.add(insertPos, key);
         values.add(insertPos, value);
-        if (tree.root.isOverFlow()) {
+        if (this==tree.root && tree.root.isOverFlow()) {
             Node siblingNode = split();
             InternalNode newRoot = new InternalNode();
-            newRoot.keys.addAll(Arrays.asList(this.getFirstKey(), siblingNode.getFirstKey()));
+            newRoot.keys.add(siblingNode.getFirstKey());
             newRoot.children.addAll(Arrays.asList(this, siblingNode));
             tree.root = newRoot;
         }
