@@ -49,6 +49,14 @@ public class Test {
         tree.put("ol", 1);
         tree.put("ok", 1);
         tree.put("or", 1);
+        tree.put("io", 1);
+        tree.put("ia", 1);
+        tree.put("ic", 1);
+        tree.put("ib", 1);
+        tree.put("ip", 1);
+        tree.put("il", 1);
+        tree.put("ik", 1);
+        tree.put("ir", 1);
         System.out.println(tree);
 
 
