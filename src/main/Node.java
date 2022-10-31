@@ -5,10 +5,10 @@ import java.util.List;
 
 public abstract class Node {
     List<String> keys;
-    int order = 5;
+    int order = 4;
 
     public Node() {
-        this.keys = new ArrayList<>(order-1);
+        this.keys = new ArrayList<>(order);
     }
 
     abstract int getVal(String key);

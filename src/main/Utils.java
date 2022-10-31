@@ -7,9 +7,9 @@ public class Utils {
     public static int binarySearch(List<String> list, String key) {
         int low = 0;
         int high = list.size() - 1;
-
+        int midPos = 0;
         while (low <= high) {
-            int midPos = (low + high) / 2;
+            midPos = (low + high) / 2;
             String midVal = list.get(midPos);
             int cmp = midVal.compareTo(key);
             if (cmp < 0)

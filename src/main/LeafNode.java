@@ -25,7 +25,7 @@ public class LeafNode extends Node {
     @Override
     int getVal(String key) {
         int pos = Collections.binarySearch(keys, key);
-        return pos >= 0 ? values.get(pos) : null;
+        return pos >= 0 ? values.get(pos) : -1;
     }
 
     @Override
@@ -66,7 +66,8 @@ public class LeafNode extends Node {
         subKeys.clear();
         subValues.clear();
         siblingNode.next = next;
-        next = siblingNode;
+        this.next = siblingNode;
+        siblingNode.previous = this;
         return siblingNode;
     }
 
@@ -79,6 +80,6 @@ public class LeafNode extends Node {
 
     @Override
     String getFirstKey() {
-        return keys.get(size() - 1);
+        return keys.get(0);
     }
 }

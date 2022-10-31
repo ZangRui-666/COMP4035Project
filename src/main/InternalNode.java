@@ -10,7 +10,7 @@ public class InternalNode extends Node {
 
     public InternalNode() {
         super();
-        children = new ArrayList<>(order);
+        children = new ArrayList<>(order+1);
     }
 
     public InternalNode(List<String> keys, List<Node> children) {
@@ -33,19 +33,17 @@ public class InternalNode extends Node {
     @Override
     void putVal(String key, int value, BPlusTree tree) {
         int pos = Utils.binarySearch(keys, key);
-        int childPos = pos >= 0 ? pos : Math.min(-pos, size()) - 1;
+        int childPos = pos >= 0 ? pos : -pos - 1;
         Node child = getChild(childPos);
         child.putVal(key, value, tree);
         if (child.isOverFlow()) {
             Node siblingNode = child.split();
-            keys.set(childPos, child.getFirstKey());
             insertChild(siblingNode);
         }
-        keys.set(childPos, child.getFirstKey());
         if (tree.root.isOverFlow()) {
             Node siblingNode = split();
             InternalNode newRoot = new InternalNode();
-            newRoot.keys.addAll(Arrays.asList(this.getFirstKey(), siblingNode.getFirstKey()));
+            newRoot.keys.add(siblingNode.getFirstKey());
             newRoot.children.addAll(Arrays.asList(this, siblingNode));
             tree.setRoot(newRoot);
         }
@@ -106,7 +104,7 @@ public class InternalNode extends Node {
 
     @Override
     String getFirstKey() {
-        Node firstChild = children.get(size() - 1);
+        Node firstChild = children.get(0);
         return firstChild.getFirstKey();
     }
 
@@ -115,7 +113,7 @@ public class InternalNode extends Node {
         int pos = Collections.binarySearch(keys, key);
         int insertPos = pos >= 0 ? pos : -pos - 1;
         keys.add(insertPos, key);
-        children.add(insertPos, node);
+        children.add(insertPos+1, node);
     }
 
     private Node getChild(int childPos) {
