@@ -54,6 +54,21 @@ public class BPlusTree {
         return root.remove(key, this);
     }
 
+    public void DumpStatistics(){
+        //0: total number of node, 1: total number of data entries, 2: total number of index entries
+        //3: Avg fill-factor of nodes, 4: height of tree
+        //todo: the length of the string array should be changed
+        String[] dataSet = new String[2];
+        dataSet[0] = root.TotalNodes() + "";
+        dataSet[1] = root.TotalEntries() + "";
+        PrintDumpStatistics(dataSet);
+    }
+
+    private void PrintDumpStatistics(String[] data){
+        System.out.println("Total number of nodes in the tree: " + data[0]);
+        System.out.println("Total number of entries in the tree: " + data[1]);
+
+    }
 
 
 

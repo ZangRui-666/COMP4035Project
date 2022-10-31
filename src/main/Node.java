@@ -23,6 +23,10 @@ public abstract class Node {
 
     abstract String getFirstKey();
 
+    abstract int TotalEntries();
+
+    abstract int TotalNodes();
+
     int size() {
         return keys.size();
     }

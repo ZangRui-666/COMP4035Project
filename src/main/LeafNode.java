@@ -82,4 +82,10 @@ public class LeafNode extends Node {
     String getFirstKey() {
         return keys.get(0);
     }
+
+    @Override
+    int TotalEntries(){ return this.size(); }
+
+    @Override
+    int TotalNodes(){ return 1; }
 }

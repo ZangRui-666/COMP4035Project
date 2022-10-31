@@ -111,6 +111,40 @@ public class InternalNode extends Node {
         return firstChild.getFirstKey();
     }
 
+    @Override
+    int TotalEntries(){
+        int sum = this.size();
+        for (int i = 0; i < this.children.size(); i++) {
+            Node n = this.children.get(i);
+            if(n instanceof InternalNode){
+                sum += n.TotalEntries();
+            }else {
+                for (int j = 0; j < this.children.size(); j++) {
+                    sum += this.children.get(j).TotalEntries();
+                }
+                return sum;
+            }
+        }
+        return sum;
+    }
+
+    @Override
+    int TotalNodes(){
+        int sum = 1;
+        for (int i = 0; i < this.children.size(); i++) {
+            Node n = this.children.get(i);
+            if(n instanceof InternalNode){
+                sum += n.TotalNodes();
+            }else {
+                for (int j = 0; j < this.children.size(); j++) {
+                    sum += this.children.get(j).TotalNodes();
+                }
+                return sum;
+            }
+        }
+        return sum;
+    }
+
     private void insertChild(Node node) {
         String key = node.getFirstKey();
         int pos = Collections.binarySearch(keys, key);

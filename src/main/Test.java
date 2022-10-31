@@ -9,11 +9,14 @@ public class Test {
     public void test() {
         BPlusTree tree = new BPlusTree();
         tree.put("ad",1);
+        System.out.println(tree);
+        tree.DumpStatistics();
         tree.put("bd",2);
         tree.put("cd",2);
         tree.put("dd",2);
         tree.put("aa",2);
         System.out.println(tree);
+        tree.DumpStatistics();
         tree.put("ab",2);
         tree.put("ac",2);
         tree.put("cd",2);
@@ -21,6 +24,7 @@ public class Test {
         tree.put("cr",2);
         tree.put("ee",2);
         System.out.println(tree);
+        tree.DumpStatistics();
         tree.put("gg",2);
         tree.put("hh",2);
         tree.put("ll",2);
@@ -30,6 +34,7 @@ public class Test {
         tree.put("ub",1);
         tree.put("up",1);
         System.out.println(tree);
+        tree.DumpStatistics();
         tree.put("gh",1);
         tree.put("gg",1);
         tree.put("ga",1);
@@ -41,6 +46,7 @@ public class Test {
         tree.put("ff", 1);
         tree.put("fo", 1);
         System.out.println(tree);
+        tree.DumpStatistics();
         tree.put("oo", 1);
         tree.put("oa", 1);
         tree.put("oc", 1);
