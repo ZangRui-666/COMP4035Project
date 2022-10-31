@@ -33,6 +33,22 @@ public class Test {
         tree.put("gh",1);
         tree.put("gg",1);
         tree.put("ga",1);
+        tree.put("fa", 1);
+        tree.put("fb", 1);
+        tree.put("fc", 1);
+        tree.put("fd", 1);
+        tree.put("fe", 1);
+        tree.put("ff", 1);
+        tree.put("fo", 1);
+        System.out.println(tree);
+        tree.put("oo", 1);
+        tree.put("oa", 1);
+        tree.put("oc", 1);
+        tree.put("ob", 1);
+        tree.put("op", 1);
+        tree.put("ol", 1);
+        tree.put("ok", 1);
+        tree.put("or", 1);
         System.out.println(tree);
 
 
