@@ -80,28 +80,32 @@ public class Test {
         tree.put("jk", 1);
         tree.put("jr", 1);
         tree.put("ko", 1);
-        tree.put("ka", 1);
+        tree.put("ka", 10);
         tree.put("kc", 1);
         tree.put("kb", 1);
         tree.put("kp", 1);
         tree.put("kl", 1);
         tree.put("kk", 1);
         tree.put("kr", 1);
+        tree.put("ed", 1);
+        tree.put("ee", 1);
+        tree.put("ef", 10);
+        tree.put("eg", 1);
+        tree.put("eh", 1);
+        tree.put("ei", 1);
+        tree.put("ej", 1);
+        tree.put("ek", 1);
         System.out.println(tree);
+        testGet(tree);
+
 
 
     }
 
-    public void testSearch(){
-        System.out.println(Utils.binarySearch(Arrays.asList("1","3","5","8"), "0"));
-        System.out.println(Utils.binarySearch(Arrays.asList("1","3","5","8"), "2"));
-        System.out.println(Utils.binarySearch(Arrays.asList("1","3","5","8"), "4"));
-        System.out.println(Utils.binarySearch(Arrays.asList("1","3","5","8"), "6"));
-        System.out.println(Utils.binarySearch(Arrays.asList("1","3","5","8"), "9"));
-
-
-
-
+    void testGet(BPlusTree tree){
+        //for test purpose, these tow value are set to 10 while others are 1
+        System.out.println(tree.get("ka"));
+        System.out.println(tree.get("ef"));
     }
 
 }

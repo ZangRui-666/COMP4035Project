@@ -22,10 +22,7 @@ public class InternalNode extends Node {
     @Override
     int getVal(String key) {
         int pos = Collections.binarySearch(keys, key);
-        int childPos = pos >= 0 ? pos : -pos - 1;
-//        if (childPos >= size()) {
-//            return null;
-//        }
+        int childPos = pos >= 0 ? pos+1 : -pos - 1;
         Node child = getChild(childPos);
         return child.getVal(key);
     }
