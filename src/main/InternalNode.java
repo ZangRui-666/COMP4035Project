@@ -112,19 +112,27 @@ public class InternalNode extends Node {
     }
 
     @Override
-    int TotalEntries(){
-        int sum = this.size();
+    int[] TotalEntries(){
+        int[] sum = new int[2];
+        int dataEntries = 0;
+        int indexEntries = this.size();
         for (int i = 0; i < this.children.size(); i++) {
             Node n = this.children.get(i);
             if(n instanceof InternalNode){
-                sum += n.TotalEntries();
+                dataEntries += n.TotalEntries()[0];
+                indexEntries += n.TotalEntries()[1];
             }else {
                 for (int j = 0; j < this.children.size(); j++) {
-                    sum += this.children.get(j).TotalEntries();
+                    dataEntries += this.children.get(j).TotalEntries()[0];
+                    indexEntries += this.children.get(j).TotalEntries()[1];
                 }
+                sum[0] = dataEntries;
+                sum[1] = indexEntries;
                 return sum;
             }
         }
+        sum[0] = dataEntries;
+        sum[1] = indexEntries;
         return sum;
     }
 
@@ -143,6 +151,40 @@ public class InternalNode extends Node {
             }
         }
         return sum;
+    }
+
+    @Override
+    int GetHeight(){
+        int height = 1;
+        Node n = this.children.get(0);
+        if(n instanceof InternalNode){
+            height += n.GetHeight();
+        }else {
+            height += n.GetHeight();
+            return height;
+        }
+        return height;
+    }
+
+    @Override
+    float AvgFillFactor(int totalNodes){
+        return (this.TotalFillFactor()/(float) totalNodes) * 100;
+    }
+
+    private float TotalFillFactor(){
+        float sumFillFactor = this.GetFillFactor();
+        for (int i = 0; i < this.children.size(); i++) {
+            Node n = this.children.get(i);
+            if(n instanceof InternalNode){
+                sumFillFactor += ((InternalNode) n).TotalFillFactor();
+            }else {
+                for (int j = 0; j < this.children.size(); j++) {
+                    sumFillFactor += this.children.get(j).GetFillFactor();
+                }
+                return sumFillFactor;
+            }
+        }
+        return sumFillFactor;
     }
 
     private void insertChild(Node node) {

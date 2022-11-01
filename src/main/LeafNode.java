@@ -84,8 +84,18 @@ public class LeafNode extends Node {
     }
 
     @Override
-    int TotalEntries(){ return this.size(); }
+    int[] TotalEntries(){
+        int[] entries = new int[2];
+        entries[0] = this.size();
+        return entries;
+    }
+
+    @Override
+    int GetHeight(){return 1;}
 
     @Override
     int TotalNodes(){ return 1; }
+
+    @Override
+    float AvgFillFactor(int totalNodes){return this.GetFillFactor()*100;}
 }

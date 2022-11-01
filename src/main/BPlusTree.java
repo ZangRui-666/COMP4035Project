@@ -58,15 +58,24 @@ public class BPlusTree {
         //0: total number of node, 1: total number of data entries, 2: total number of index entries
         //3: Avg fill-factor of nodes, 4: height of tree
         //todo: the length of the string array should be changed
-        String[] dataSet = new String[2];
+        String[] dataSet = new String[5];
         dataSet[0] = root.TotalNodes() + "";
-        dataSet[1] = root.TotalEntries() + "";
+        int[] totalEntries = root.TotalEntries();
+        dataSet[1] = totalEntries[0] + "";
+        dataSet[2] = totalEntries[1] + "";
+        dataSet[3] = root.AvgFillFactor(Integer.parseInt(dataSet[0])) + "%";
+        dataSet[4] = root.GetHeight() + "";
         PrintDumpStatistics(dataSet);
     }
 
     private void PrintDumpStatistics(String[] data){
+        //if(data.length != 5) return;
         System.out.println("Total number of nodes in the tree: " + data[0]);
-        System.out.println("Total number of entries in the tree: " + data[1]);
+        System.out.println("Total number of data entries in the tree: " + data[1]);
+        System.out.println("Total number of index entries in the tree: " + data[2]);
+        System.out.println("Average fill-factor of the nodes is: " + data[3]);
+        System.out.println("The height of the tree is: " + data[4]);
+        System.out.println();
 
     }
 

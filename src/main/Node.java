@@ -23,9 +23,17 @@ public abstract class Node {
 
     abstract String getFirstKey();
 
-    abstract int TotalEntries();
+    abstract int[] TotalEntries();
 
     abstract int TotalNodes();
+
+    abstract int GetHeight();
+
+    abstract float AvgFillFactor(int totalNodes);
+
+    float GetFillFactor(){
+        return (float) this.size()/(float) order;
+    }
 
     int size() {
         return keys.size();
