@@ -11,7 +11,12 @@ public abstract class Node {
         this.keys = new ArrayList<>(order);
     }
 
-    abstract int getVal(String key);
+    abstract Node getSearchNode(String key);
+
+    String indexOfKey(int index){
+        return keys.get(index);
+    }
+
 
     abstract void putVal(String key, int value, BPlusTree tree);
 

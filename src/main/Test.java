@@ -1,43 +1,42 @@
 package main;
 
-import java.util.Arrays;
-
 public class Test {
     public static void main(String[] args) {
         new Test().test();
     }
+
     public void test() {
         BPlusTree tree = new BPlusTree();
-        tree.put("ad",1);
+        tree.put("ad", 1);
         System.out.println(tree);
         tree.DumpStatistics();
-        tree.put("bd",2);
-        tree.put("cd",2);
-        tree.put("dd",2);
-        tree.put("aa",2);
+        tree.put("bd", 2);
+        tree.put("cd", 2);
+        tree.put("dd", 2);
+        tree.put("aa", 2);
         System.out.println(tree);
         tree.DumpStatistics();
-        tree.put("ab",2);
-        tree.put("ac",2);
-        tree.put("cd",2);
-        tree.put("cf",2);
-        tree.put("cr",2);
-        tree.put("ee",2);
+        tree.put("ab", 2);
+        tree.put("ac", 2);
+        tree.put("cd", 2);
+        tree.put("cf", 2);
+        tree.put("cr", 2);
+        tree.put("ee", 2);
         System.out.println(tree);
         tree.DumpStatistics();
-        tree.put("gg",2);
-        tree.put("hh",2);
-        tree.put("ll",2);
+        tree.put("gg", 2);
+        tree.put("hh", 2);
+        tree.put("ll", 2);
         System.out.println(tree);
-        tree.put("ua",1);
-        tree.put("ue",1);
-        tree.put("ub",1);
-        tree.put("up",1);
+        tree.put("ua", 1);
+        tree.put("ue", 1);
+        tree.put("ub", 1);
+        tree.put("up", 1);
         System.out.println(tree);
         tree.DumpStatistics();
-        tree.put("gh",1);
-        tree.put("gg",1);
-        tree.put("ga",1);
+        tree.put("gh", 1);
+        tree.put("gg", 1);
+        tree.put("ga", 1);
         tree.put("fa", 1);
         tree.put("fb", 1);
         tree.put("fc", 1);
@@ -99,13 +98,12 @@ public class Test {
         testGet(tree);
 
 
-
     }
 
-    void testGet(BPlusTree tree){
+    void testGet(BPlusTree tree) {
         //for test purpose, these tow value are set to 10 while others are 1
-        System.out.println(tree.get("ka"));
-        System.out.println(tree.get("ef"));
+        System.out.println(tree.search("ka", "kp"));
+        System.out.println(tree.search("ef", "ei"));
     }
 
 }

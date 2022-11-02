@@ -42,8 +42,25 @@ public class BPlusTree {
         return str.toString();
     }
 
-    public int get(String key) {
-        return root.getVal(key);
+    public List<SearchResult> search(String key1, String key2) {
+            Node left = root.getSearchNode(key1);
+            int pos = Utils.binarySearch(left.keys, key1);
+            if(pos<0) pos = -pos - 1;
+            String search = left.keys.get(pos);
+            List<SearchResult> results  = new LinkedList<>();
+            while(search.compareTo(key2)>=0){
+                results.add(new SearchResult(search, ((LeafNode) left).getValues().get(pos)));
+                if(pos<left.size()-1){
+                    pos++;
+                    search = left.indexOfKey(pos);
+                }else {
+                    left = ((LeafNode) left).next;
+                    pos = 0;
+                    search = left.indexOfKey(pos);
+                }
+            }
+            return results;
+
     }
 
     public void put(String key, int value) {

@@ -7,6 +7,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class LeafNode extends Node {
+    public List<Integer> getValues() {
+        return values;
+    }
+
     List<Integer> values;
     LeafNode next;
     LeafNode previous;
@@ -23,9 +27,8 @@ public class LeafNode extends Node {
     }
 
     @Override
-    int getVal(String key) {
-        int pos = Collections.binarySearch(keys, key);
-        return pos >= 0 ? values.get(pos) : -1;
+    Node getSearchNode(String key) {
+        return this;
     }
 
     @Override

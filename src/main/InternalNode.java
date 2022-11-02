@@ -20,11 +20,11 @@ public class InternalNode extends Node {
     }
 
     @Override
-    int getVal(String key) {
+    Node getSearchNode(String key) {
         int pos = Collections.binarySearch(keys, key);
-        int childPos = pos >= 0 ? pos+1 : -pos - 1;
+        int childPos = pos >= 0 ? pos + 1 : -pos - 1;
         Node child = getChild(childPos);
-        return child.getVal(key);
+        return child.getSearchNode(key);
     }
 
     @Override
@@ -109,16 +109,16 @@ public class InternalNode extends Node {
     }
 
     @Override
-    int[] TotalEntries(){
+    int[] TotalEntries() {
         int[] sum = new int[2];
         int dataEntries = 0;
         int indexEntries = this.size();
         for (int i = 0; i < this.children.size(); i++) {
             Node n = this.children.get(i);
-            if(n instanceof InternalNode){
+            if (n instanceof InternalNode) {
                 dataEntries += n.TotalEntries()[0];
                 indexEntries += n.TotalEntries()[1];
-            }else {
+            } else {
                 for (int j = 0; j < this.children.size(); j++) {
                     dataEntries += this.children.get(j).TotalEntries()[0];
                     indexEntries += this.children.get(j).TotalEntries()[1];
@@ -134,13 +134,13 @@ public class InternalNode extends Node {
     }
 
     @Override
-    int TotalNodes(){
+    int TotalNodes() {
         int sum = 1;
         for (int i = 0; i < this.children.size(); i++) {
             Node n = this.children.get(i);
-            if(n instanceof InternalNode){
+            if (n instanceof InternalNode) {
                 sum += n.TotalNodes();
-            }else {
+            } else {
                 for (int j = 0; j < this.children.size(); j++) {
                     sum += this.children.get(j).TotalNodes();
                 }
@@ -151,12 +151,12 @@ public class InternalNode extends Node {
     }
 
     @Override
-    int GetHeight(){
+    int GetHeight() {
         int height = 1;
         Node n = this.children.get(0);
-        if(n instanceof InternalNode){
+        if (n instanceof InternalNode) {
             height += n.GetHeight();
-        }else {
+        } else {
             height += n.GetHeight();
             return height;
         }
@@ -164,17 +164,17 @@ public class InternalNode extends Node {
     }
 
     @Override
-    float AvgFillFactor(int totalNodes){
-        return (this.TotalFillFactor()/(float) totalNodes) * 100;
+    float AvgFillFactor(int totalNodes) {
+        return (this.TotalFillFactor() / (float) totalNodes) * 100;
     }
 
-    private float TotalFillFactor(){
+    private float TotalFillFactor() {
         float sumFillFactor = this.GetFillFactor();
         for (int i = 0; i < this.children.size(); i++) {
             Node n = this.children.get(i);
-            if(n instanceof InternalNode){
+            if (n instanceof InternalNode) {
                 sumFillFactor += ((InternalNode) n).TotalFillFactor();
-            }else {
+            } else {
                 for (int j = 0; j < this.children.size(); j++) {
                     sumFillFactor += this.children.get(j).GetFillFactor();
                 }
