@@ -5,10 +5,10 @@ import java.util.List;
 
 public abstract class Node {
     List<String> keys;
-    int order = 4;
+    int maxEntries = 4;
 
     public Node() {
-        this.keys = new ArrayList<>(order);
+        this.keys = new ArrayList<>(maxEntries);
     }
 
     abstract Node getSearchNode(String key);
@@ -20,7 +20,7 @@ public abstract class Node {
 
     abstract void putVal(String key, int value, BPlusTree tree);
 
-    abstract int remove(String key, BPlusTree tree);
+    abstract int remove(String key, int value, BPlusTree tree);
 
     abstract Node split();
 
@@ -36,8 +36,12 @@ public abstract class Node {
 
     abstract float AvgFillFactor(int totalNodes);
 
+    abstract String[] RemoveKey(int pos);
+
+    abstract void AddVal(String key, int value);
+
     float GetFillFactor(){
-        return (float) this.size()/(float) order;
+        return (float) this.size()/(float) maxEntries;
     }
 
     int size() {
@@ -45,11 +49,15 @@ public abstract class Node {
     }
 
     boolean isOverFlow() {
-        return size() > order;
+        return size() > maxEntries;
     }
 
-    boolean isUnderFlow() {
-        return size() <= order / 2;
+    boolean IsUnderFlow() {
+        return size() < maxEntries / 2;
+    }
+
+    boolean IsRedundant(){
+        return this.size() >= ((maxEntries/2) + 1);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class LeafNode extends Node {
 
     public LeafNode() {
         super();
-        values = new ArrayList<>(order + 1);
+        values = new ArrayList<>(maxEntries + 1);
     }
 
     public LeafNode(List<String> keys, List<Integer> values) {
@@ -51,11 +51,12 @@ public class LeafNode extends Node {
     }
 
     @Override
-    int remove(String key, BPlusTree tree) {
-        int pos = Collections.binarySearch(keys, key);
+    int remove(String key, int value, BPlusTree tree) {
+        int pos = Utils.binarySearch(keys, key);
         if (pos >= 0) {
             keys.remove(pos);
-            return values.remove(pos);
+            values.remove(pos);
+            return 1;
         }
         return -1;
     }
@@ -101,4 +102,24 @@ public class LeafNode extends Node {
 
     @Override
     float AvgFillFactor(int totalNodes){return this.GetFillFactor()*100;}
+
+    @Override
+    String[] RemoveKey(int pos){
+        String[] removedData = new String[2];
+        removedData[1] = this.values.remove(pos) + "";
+        removedData[0] = this.keys.remove(pos);
+        return removedData;
+    }
+
+    @Override
+    void AddVal(String key, int value){
+        int pos = Utils.binarySearch(keys, key);
+        if (pos >= 0) {
+            values.set(pos, value);
+            return;
+        }
+        int insertPos = -pos - 1;
+        keys.add(insertPos, key);
+        values.add(insertPos, value);
+    }
 }

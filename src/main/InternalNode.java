@@ -10,7 +10,7 @@ public class InternalNode extends Node {
 
     public InternalNode() {
         super();
-        children = new ArrayList<>(order + 1);
+        children = new ArrayList<>(maxEntries + 1);
     }
 
     public InternalNode(List<String> keys, List<Node> children) {
@@ -50,38 +50,83 @@ public class InternalNode extends Node {
     }
 
     @Override
-    int remove(String key, BPlusTree tree) {
-        int pos = Collections.binarySearch(keys, key);
-        int childPos = pos >= 0 ? pos : Math.min(-pos, size()) - 1;
+    int remove(String key, int value, BPlusTree tree) {
+        int pos = Utils.binarySearch(keys, key);
+        int childPos = pos >= 0 ? pos + 1 : Math.min(-pos, size()) - 1;
+        int success = 0;
         Node child = getChild(childPos);
-        int value = child.remove(key, tree);
-        keys.set(childPos, child.getFirstKey());
-        if (child.isUnderFlow()) {
-            int rightPos;
-            Node left, right;
-            if (childPos > 0) {
-                rightPos = childPos;
-                left = getChild(childPos - 1);
-                right = child;
-            } else {
-                rightPos = childPos + 1;
-                left = child;
-                right = getChild(childPos + 1);
+        success = child.remove(key, value, tree);
+        if(success == -1) return success;
+        if(child.IsUnderFlow()){
+            Node leftNode = null, rightNode = null, brotherNode = null;
+            int leRi = 0;
+            if(childPos >=0 && childPos != children.size()-1){
+                rightNode = getChild(childPos + 1);
+                if(rightNode.IsRedundant()){
+                    brotherNode = rightNode;
+                    leRi = 1;
+                }
             }
-            left.merge(right);
-            keys.remove(rightPos);
-            children.remove(rightPos);
-            keys.set(rightPos - 1, left.getFirstKey());
-            if (left.isOverFlow()) {
-                Node siblingNode = left.split();
-                keys.set(rightPos - 1, left.getFirstKey());
-                insertChild(siblingNode);
+            if(childPos != 0 && childPos <=children.size()-1){
+                leftNode = getChild(childPos-1);
+                if(leftNode.IsRedundant()){
+                    brotherNode = leftNode;
+                    leRi = -1;
+                }
             }
-            if (tree.root.size() < 2) {
-                tree.setRoot(left);
+
+            if(brotherNode != null){
+                pos = pos >= 0 ? pos : Math.min(-pos, size())-1;
+                Borrow(brotherNode, child, this, childPos, leRi, pos);
+            }else {
+                if(rightNode != null) {
+                    brotherNode = rightNode;
+                    leRi = 1;
+                }else {
+                    brotherNode = leftNode;
+                    leRi = -1;
+                }
+                if(this == tree.root && this.keys.size() < 2) {
+                    child.AddVal(this.keys.get(0), -1);
+                    child.merge(brotherNode);
+                    tree.setRoot(child);
+                }else {
+                    child.merge(brotherNode);
+                    keys.remove(childPos);
+                    children.remove(childPos + leRi);
+                }
             }
         }
-        return value;
+        return 1;
+
+
+//        int num = child.remove(key, value, tree);
+//        keys.set(childPos, child.getFirstKey());
+//        if (child.IsUnderFlow()) {
+//            int rightPos;
+//            Node left, right;
+//            if (childPos > 0) {
+//                rightPos = childPos;
+//                left = getChild(childPos - 1);
+//                right = child;
+//            } else {
+//                rightPos = childPos + 1;
+//                left = child;
+//                right = getChild(childPos + 1);
+//            }
+//            left.merge(right);
+//            keys.remove(rightPos);
+//            children.remove(rightPos);
+//            keys.set(rightPos - 1, left.getFirstKey());
+//            if (left.isOverFlow()) {
+//                Node siblingNode = left.split();
+//                keys.set(rightPos - 1, left.getFirstKey());
+//                insertChild(siblingNode);
+//            }
+//            if (tree.root.size() < 2) {
+//                tree.setRoot(left);
+//            }
+//        }return num;
     }
 
     @Override
@@ -166,6 +211,41 @@ public class InternalNode extends Node {
     @Override
     float AvgFillFactor(int totalNodes) {
         return (this.TotalFillFactor() / (float) totalNodes) * 100;
+    }
+
+    @Override
+    String[] RemoveKey(int pos){
+        String[] removedData = new String[2];
+        removedData[1] = "-1";
+        removedData[0] = this.keys.remove(pos);
+        return removedData;
+    }
+
+    @Override
+    void AddVal(String key, int value){
+        int pos = Utils.binarySearch(keys, key);
+        if (pos >= 0) {
+            return;
+        }
+        int insertPos = -pos - 1;
+        keys.add(insertPos, key);
+    }
+
+    private void Borrow(Node brother, Node thisNode, Node fatherNode, int childPos, int leRi, int pos){
+        String[] borrowData;
+        if(leRi == -1){
+            borrowData = brother.RemoveKey(brother.keys.size()-1);
+        }else {
+            borrowData = brother.RemoveKey(0);
+        }
+        if(thisNode instanceof LeafNode) {
+            thisNode.AddVal(borrowData[0], Integer.parseInt(borrowData[1]));
+            fatherNode.keys.set(childPos+leRi, borrowData[0]);
+        }else {
+            thisNode.AddVal(fatherNode.keys.get(pos), -1);
+            fatherNode.keys.set(pos, borrowData[0]);
+        }
+
     }
 
     private float TotalFillFactor() {

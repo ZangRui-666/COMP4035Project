@@ -4,19 +4,14 @@ import java.util.*;
 
 
 public class BPlusTree {
-
-    public void setRoot(Node root) {
-        this.root = root;
-    }
-
-    /**
-     * 根节点
-     */
     public Node root;
-
 
     public BPlusTree() {
         root = new LeafNode();
+    }
+
+    public void setRoot(Node root) {
+        this.root = root;
     }
 
     @Override
@@ -67,14 +62,13 @@ public class BPlusTree {
         root.putVal(key, value, this);
     }
 
-    public int remove(String key) {
-        return root.remove(key, this);
+    public int remove(String key, int value) {
+        return root.remove(key, value, this);
     }
 
     public void DumpStatistics(){
         //0: total number of node, 1: total number of data entries, 2: total number of index entries
         //3: Avg fill-factor of nodes, 4: height of tree
-        //todo: the length of the string array should be changed
         String[] dataSet = new String[5];
         dataSet[0] = root.TotalNodes() + "";
         int[] totalEntries = root.TotalEntries();
@@ -86,7 +80,7 @@ public class BPlusTree {
     }
 
     private void PrintDumpStatistics(String[] data){
-        //if(data.length != 5) return;
+        if(data.length != 5) return;
         System.out.println("Total number of nodes in the tree: " + data[0]);
         System.out.println("Total number of data entries in the tree: " + data[1]);
         System.out.println("Total number of index entries in the tree: " + data[2]);
