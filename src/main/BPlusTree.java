@@ -48,7 +48,7 @@ public class BPlusTree {
             if(pos<0) pos = -pos - 1;
             String search = left.keys.get(pos);
             List<SearchResult> results  = new LinkedList<>();
-            while(search.compareTo(key2)>=0){
+            while(search.compareTo(key2)<=0){
                 results.add(new SearchResult(search, ((LeafNode) left).getValues().get(pos)));
                 if(pos<left.size()-1){
                     pos++;

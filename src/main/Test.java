@@ -55,7 +55,6 @@ public class Test {
         tree.put("ok", 1);
         tree.put("or", 1);
         tree.put("io", 1);
-        tree.put("ia", 1);
         tree.put("ic", 1);
         tree.put("ib", 1);
         tree.put("ip", 1);
@@ -103,7 +102,7 @@ public class Test {
     void testGet(BPlusTree tree) {
         //for test purpose, these tow value are set to 10 while others are 1
         System.out.println(tree.search("ka", "kp"));
-        System.out.println(tree.search("ef", "ei"));
+        System.out.println(tree.search("ia", "ub"));
     }
 
 }
