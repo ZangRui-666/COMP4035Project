@@ -51,7 +51,7 @@ public class LeafNode extends Node {
     }
 
     @Override
-    int remove(String key, int value, BPlusTree tree) {
+    int remove(String key, BPlusTree tree) {
         int pos = Utils.binarySearch(keys, key);
         if (pos >= 0) {
             keys.remove(pos);

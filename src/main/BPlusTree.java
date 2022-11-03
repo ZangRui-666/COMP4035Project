@@ -62,8 +62,12 @@ public class BPlusTree {
         root.putVal(key, value, this);
     }
 
-    public int remove(String key, int value) {
-        return root.remove(key, value, this);
+    public int remove(String key) {
+        int success = root.remove(key,this);
+        if(success == -1){
+            System.out.println("The key: " + key + " deleted failed. The key is not found in the tree! Please check!");
+        }
+        return success;
     }
 
     public void DumpStatistics(){

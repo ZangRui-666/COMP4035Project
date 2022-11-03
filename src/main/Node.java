@@ -20,7 +20,7 @@ public abstract class Node {
 
     abstract void putVal(String key, int value, BPlusTree tree);
 
-    abstract int remove(String key, int value, BPlusTree tree);
+    abstract int remove(String key, BPlusTree tree);
 
     abstract Node split();
 

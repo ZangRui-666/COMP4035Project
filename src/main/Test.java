@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public class Test {
     public static void main(String[] args) {
-        new Test().test();
-        //new Test().zzyTest();
+        //new Test().test();
+        new Test().zzyTest();
     }
 
     public void zzyTest(){
@@ -86,13 +86,15 @@ public class Test {
 //        tree.put("ej", 1);
 //        tree.put("ek", 1);
         System.out.println(tree);
-        tree.remove("ad", 1);
+        tree.remove("ad");
         System.out.println(tree);
-        tree.remove("ac", 1);
+        tree.remove("ac");
         System.out.println(tree);
-        tree.remove("cf", 1);
+        tree.remove("cf");
         System.out.println(tree);
-        tree.remove("bd", 1);
+        tree.remove("bd");
+        System.out.println(tree);
+        tree.remove("asdjna");
         System.out.println(tree);
     }
 
@@ -192,8 +194,8 @@ public class Test {
         tree.put("cz", 1);
         tree.put("ck", 1);
         System.out.println(tree);
-        tree.remove("ad", 1);
-        tree.remove("bd", 2);
+        tree.remove("ad");
+        tree.remove("bd");
         System.out.println(tree);
 
 

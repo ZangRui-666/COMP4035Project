@@ -50,12 +50,12 @@ public class InternalNode extends Node {
     }
 
     @Override
-    int remove(String key, int value, BPlusTree tree) {
+    int remove(String key, BPlusTree tree) {
         int pos = Utils.binarySearch(keys, key);
         int childPos = pos >= 0 ? pos + 1 : Math.min(-pos, size()) - 1;
         int success = 0;
         Node child = getChild(childPos);
-        success = child.remove(key, value, tree);
+        success = child.remove(key, tree);
         if(success == -1) return success;
         if(child.IsUnderFlow()){
             Node leftNode = null, rightNode = null, brotherNode = null;
@@ -98,35 +98,6 @@ public class InternalNode extends Node {
             }
         }
         return 1;
-
-
-//        int num = child.remove(key, value, tree);
-//        keys.set(childPos, child.getFirstKey());
-//        if (child.IsUnderFlow()) {
-//            int rightPos;
-//            Node left, right;
-//            if (childPos > 0) {
-//                rightPos = childPos;
-//                left = getChild(childPos - 1);
-//                right = child;
-//            } else {
-//                rightPos = childPos + 1;
-//                left = child;
-//                right = getChild(childPos + 1);
-//            }
-//            left.merge(right);
-//            keys.remove(rightPos);
-//            children.remove(rightPos);
-//            keys.set(rightPos - 1, left.getFirstKey());
-//            if (left.isOverFlow()) {
-//                Node siblingNode = left.split();
-//                keys.set(rightPos - 1, left.getFirstKey());
-//                insertChild(siblingNode);
-//            }
-//            if (tree.root.size() < 2) {
-//                tree.setRoot(left);
-//            }
-//        }return num;
     }
 
     @Override
