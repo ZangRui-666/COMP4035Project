@@ -65,8 +65,9 @@ public class BPlusTree {
     public int Remove(String key) {
         int success = root.Remove(key,this);
         if(success == -1){
-            System.out.println("The key: " + key + " deleted failed. The key is not found in the tree! Please check!");
+            System.out.println("The key: " + key + " is not in the B+-tree.");
         }
+        System.out.println("The key "+ key +" has been deleted in the B+-tree.");
         return success;
     }
 
