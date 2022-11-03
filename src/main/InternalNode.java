@@ -52,8 +52,9 @@ public class InternalNode extends Node {
     @Override
     int Remove(String key, BPlusTree tree) {
         int pos = Utils.binarySearch(keys, key);
-        int childPos = pos >= 0 ? pos + 1 : Math.min(-pos, Size()) - 1;
-        int success = 0;
+//        int childPos = pos >= 0 ? pos + 1 : Math.min(-pos, Size()) - 1;
+        int childPos = pos >= 0 ? pos + 1 : -pos - 1;
+        int success = 1;
         Node child = GetChild(childPos);
         success = child.Remove(key, tree);
         if(success == -1) return success;
@@ -92,7 +93,8 @@ public class InternalNode extends Node {
                     tree.setRoot(child);
                 }else {
                     child.Merge(brotherNode);
-                    keys.remove(childPos);
+                   // keys.remove(childPos);
+                    keys.remove(Math.min(childPos, Size()-1));
                     children.remove(childPos + leRi);
                 }
             }
@@ -211,7 +213,11 @@ public class InternalNode extends Node {
         }
         if(thisNode instanceof LeafNode) {
             thisNode.AddVal(borrowData[0], Integer.parseInt(borrowData[1]));
-            fatherNode.keys.set(childPos+leRi, borrowData[0]);
+            if(leRi == -1){
+                fatherNode.keys.set(childPos+leRi, borrowData[0]);
+            }else {
+                fatherNode.keys.set(childPos, brother.keys.get(0));
+            }
         }else {
             thisNode.AddVal(fatherNode.keys.get(pos), -1);
             fatherNode.keys.set(pos, borrowData[0]);

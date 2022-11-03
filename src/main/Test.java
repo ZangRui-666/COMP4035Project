@@ -114,7 +114,7 @@ public class Test {
         tree.put("cd", 2);
         tree.put("cf", 2);
         tree.put("cr", 2);
-        tree.put("ee", 2);
+        //tree.put("ee", 2);
         System.out.println(tree);
         tree.DumpStatistics();
         tree.put("gg", 2);
@@ -172,6 +172,7 @@ public class Test {
         tree.put("jk", 1);
         tree.put("jr", 1);
         String before1 = tree.toString();
+        tree.DumpStatistics();
         tree.put("ko", 1);
         tree.put("ka", 1);
         tree.put("kc", 1);
@@ -183,7 +184,9 @@ public class Test {
         tree.put("ed", 1);
         tree.put("ee", 1);
         tree.put("ef", 10);
-        String before2 = tree.toString();
+        System.out.println("this is the initial tree");
+        System.out.println(tree);
+
         tree.put("eg", 1);
         tree.put("eh", 1);
         tree.put("ei", 1);
@@ -200,28 +203,54 @@ public class Test {
         System.out.println(tree);
 
         tree.Remove("cc");
+        System.out.println(tree);
         tree.Remove("cn");
+        System.out.println(tree);
         tree.Remove("cl");
+        System.out.println(tree);
         tree.Remove("cz");
+        System.out.println(tree);
         tree.Remove("ck");
+        System.out.println(tree);
         tree.Remove("eg");
+        System.out.println(tree);
         tree.Remove("eh");
+        System.out.println(tree);
         tree.Remove("ei");
+        System.out.println(tree);
         tree.Remove("ej");
         tree.Remove("ek");
-        System.out.println(before2.equals(tree.toString()));
+       // System.out.println(before2.equals(tree.toString()));
         tree.Remove("ko");
+        System.out.println(tree);
         tree.Remove("ka");
+        System.out.println(tree);
         tree.Remove("kc");
+        System.out.println(tree);
         tree.Remove("kb");
+        System.out.println(tree);
         tree.Remove("kp");
+        System.out.println(tree);
         tree.Remove("kl");
+        System.out.println(tree);
         tree.Remove("kk");
+        System.out.println(tree);
         tree.Remove("kr");
+        System.out.println(tree);
         tree.Remove("ed");
+        System.out.println(tree);
         tree.Remove("ee");
+        System.out.println(tree);
         tree.Remove("ef");
-        System.out.println(before1.equals(tree.toString()));
+        System.out.println(tree);
+//        String before2 = tree.toString();
+//        tree.DumpStatistics();
+//       // System.out.println(before1.equals(tree.toString()));
+//        System.out.println(before1);
+//        System.out.println(before2);
+//        System.out.println(before1.equals(before2));
+
+
     }
 
     void testGet(BPlusTree tree) {

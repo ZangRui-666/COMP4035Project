@@ -52,13 +52,11 @@ public class LeafNode extends Node {
 
     @Override
     int Remove(String key, BPlusTree tree) {
-        int pos = Utils.binarySearch(keys, key);
-        if (pos >= 0) {
-            keys.remove(pos);
-            values.remove(pos);
-            return 1;
-        }
-        return -1;
+        if(!this.keys.contains(key)) return -1;
+        int pos = this.keys.indexOf(key);
+        this.keys.remove(pos);
+        this.values.remove(pos);
+        return 1;
     }
 
     @Override
@@ -78,8 +76,9 @@ public class LeafNode extends Node {
     @Override
     void Merge(Node node) {
         LeafNode mergeNode = (LeafNode) node;
-        this.keys.addAll(mergeNode.keys);
-        this.values.addAll(mergeNode.values);
+        for (int i = 0; i < mergeNode.Size(); i++) {
+            AddVal(mergeNode.keys.get(i), mergeNode.values.get(i));
+        }
     }
 
     @Override
