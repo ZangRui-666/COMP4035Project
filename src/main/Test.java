@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public class Test {
     public static void main(String[] args) {
-        //new Test().test();
-        new Test().zzyTest();
+        new Test().test();
+        //new Test().zzyTest();
     }
 
     public void zzyTest(){
@@ -171,6 +171,7 @@ public class Test {
         tree.put("jl", 1);
         tree.put("jk", 1);
         tree.put("jr", 1);
+        String before1 = tree.toString();
         tree.put("ko", 1);
         tree.put("ka", 1);
         tree.put("kc", 1);
@@ -182,26 +183,42 @@ public class Test {
         tree.put("ed", 1);
         tree.put("ee", 1);
         tree.put("ef", 10);
+        String before2 = tree.toString();
         tree.put("eg", 1);
         tree.put("eh", 1);
         tree.put("ei", 1);
         tree.put("ej", 1);
         tree.put("ek", 1);
-        System.out.println(tree);
         tree.put("cc", 1);
         tree.put("cn", 1);
         tree.put("cl", 1);
         tree.put("cz", 1);
         tree.put("ck", 1);
         System.out.println(tree);
-        tree.remove("ad");
-        tree.remove("bd");
-        System.out.println(tree);
 
-
-        testGet(tree);
-
-
+        tree.remove("cc");
+        tree.remove("cn");
+        tree.remove("cl");
+        tree.remove("cz");
+        tree.remove("ck");
+        tree.remove("eg");
+        tree.remove("eh");
+        tree.remove("ei");
+        tree.remove("ej");
+        tree.remove("ek");
+        System.out.println(before2.equals(tree.toString()));
+        tree.remove("ko");
+        tree.remove("ka");
+        tree.remove("kc");
+        tree.remove("kb");
+        tree.remove("kp");
+        tree.remove("kl");
+        tree.remove("kk");
+        tree.remove("kr");
+        tree.remove("ed");
+        tree.remove("ee");
+        tree.remove("ef");
+        System.out.println(before1.equals(tree.toString()));
     }
 
     void testGet(BPlusTree tree) {
