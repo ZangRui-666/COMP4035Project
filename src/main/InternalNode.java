@@ -20,55 +20,55 @@ public class InternalNode extends Node {
     }
 
     @Override
-    Node getSearchNode(String key) {
+    Node GetSearchNode(String key) {
         int pos = Collections.binarySearch(keys, key);
         int childPos = pos >= 0 ? pos + 1 : -pos - 1;
-        Node child = getChild(childPos);
-        return child.getSearchNode(key);
+        Node child = GetChild(childPos);
+        return child.GetSearchNode(key);
     }
 
     @Override
-    void putVal(String key, int value, BPlusTree tree) {
+    void PutVal(String key, int value, BPlusTree tree) {
         int pos = Utils.binarySearch(keys, key);
         int childPos = pos >= 0 ? pos + 1 : -pos - 1;
-        Node child = getChild(childPos);
-        child.putVal(key, value, tree);
-        if (child.isOverFlow()) {
-            Node siblingNode = child.split();
-            insertChild(siblingNode);
+        Node child = GetChild(childPos);
+        child.PutVal(key, value, tree);
+        if (child.IsOverFlow()) {
+            Node siblingNode = child.Split();
+            InsertChild(siblingNode);
             if (child instanceof InternalNode)
-                child.keys.remove(child.size() - 1);
+                child.keys.remove(child.Size() - 1);
         }
-        if (tree.root.isOverFlow()) {
-            Node siblingNode = split();
+        if (tree.root.IsOverFlow()) {
+            Node siblingNode = Split();
             InternalNode newRoot = new InternalNode();
-            newRoot.keys.add(keys.get(size() - 1));
-            this.keys.remove(size() - 1);
+            newRoot.keys.add(keys.get(Size() - 1));
+            this.keys.remove(Size() - 1);
             newRoot.children.addAll(Arrays.asList(this, siblingNode));
             tree.setRoot(newRoot);
         }
     }
 
     @Override
-    int remove(String key, BPlusTree tree) {
+    int Remove(String key, BPlusTree tree) {
         int pos = Utils.binarySearch(keys, key);
-        int childPos = pos >= 0 ? pos + 1 : Math.min(-pos, size()) - 1;
+        int childPos = pos >= 0 ? pos + 1 : Math.min(-pos, Size()) - 1;
         int success = 0;
-        Node child = getChild(childPos);
-        success = child.remove(key, tree);
+        Node child = GetChild(childPos);
+        success = child.Remove(key, tree);
         if(success == -1) return success;
         if(child.IsUnderFlow()){
             Node leftNode = null, rightNode = null, brotherNode = null;
             int leRi = 0;
             if(childPos >=0 && childPos != children.size()-1){
-                rightNode = getChild(childPos + 1);
+                rightNode = GetChild(childPos + 1);
                 if(rightNode.IsRedundant()){
                     brotherNode = rightNode;
                     leRi = 1;
                 }
             }
             if(childPos != 0 && childPos <=children.size()-1){
-                leftNode = getChild(childPos-1);
+                leftNode = GetChild(childPos-1);
                 if(leftNode.IsRedundant()){
                     brotherNode = leftNode;
                     leRi = -1;
@@ -76,7 +76,7 @@ public class InternalNode extends Node {
             }
 
             if(brotherNode != null){
-                pos = pos >= 0 ? pos : Math.min(-pos, size())-1;
+                pos = pos >= 0 ? pos : Math.min(-pos, Size())-1;
                 Borrow(brotherNode, child, this, childPos, leRi, pos);
             }else {
                 if(rightNode != null) {
@@ -88,10 +88,10 @@ public class InternalNode extends Node {
                 }
                 if(this == tree.root && this.keys.size() < 2) {
                     child.AddVal(this.keys.get(0), -1);
-                    child.merge(brotherNode);
+                    child.Merge(brotherNode);
                     tree.setRoot(child);
                 }else {
-                    child.merge(brotherNode);
+                    child.Merge(brotherNode);
                     keys.remove(childPos);
                     children.remove(childPos + leRi);
                 }
@@ -101,8 +101,8 @@ public class InternalNode extends Node {
     }
 
     @Override
-    Node split() {
-        int from = size() / 2 + 1, to = size();
+    Node Split() {
+        int from = Size() / 2 + 1, to = Size();
         List<String> subKeys = keys.subList(from, to);
         List<Node> subChildren = children.subList(from, to + 1);
         InternalNode siblingNode = new InternalNode(subKeys, subChildren);
@@ -112,23 +112,23 @@ public class InternalNode extends Node {
     }
 
     @Override
-    void merge(Node node) {
+    void Merge(Node node) {
         InternalNode mergeNode = (InternalNode) node;
         this.keys.addAll(mergeNode.keys);
         this.children.addAll(mergeNode.children);
     }
 
     @Override
-    String getFirstKey() {
+    String GetFirstKey() {
         Node firstChild = children.get(0);
-        return firstChild.getFirstKey();
+        return firstChild.GetFirstKey();
     }
 
     @Override
     int[] TotalEntries() {
         int[] sum = new int[2];
         int dataEntries = 0;
-        int indexEntries = this.size();
+        int indexEntries = this.Size();
         for (int i = 0; i < this.children.size(); i++) {
             Node n = this.children.get(i);
             if (n instanceof InternalNode) {
@@ -235,15 +235,15 @@ public class InternalNode extends Node {
         return sumFillFactor;
     }
 
-    private void insertChild(Node node) {
-        String key = node.getFirstKey();
+    private void InsertChild(Node node) {
+        String key = node.GetFirstKey();
         int pos = Collections.binarySearch(keys, key);
         int insertPos = pos >= 0 ? pos : -pos - 1;
         keys.add(insertPos, key);
         children.add(insertPos + 1, node);
     }
 
-    private Node getChild(int childPos) {
+    private Node GetChild(int childPos) {
         return children.get(childPos);
     }
 }

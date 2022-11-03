@@ -27,12 +27,12 @@ public class LeafNode extends Node {
     }
 
     @Override
-    Node getSearchNode(String key) {
+    Node GetSearchNode(String key) {
         return this;
     }
 
     @Override
-    void putVal(String key, int value, BPlusTree tree) {
+    void PutVal(String key, int value, BPlusTree tree) {
         int pos = Utils.binarySearch(keys, key);
         if (pos >= 0) {
             values.set(pos, value);
@@ -41,17 +41,17 @@ public class LeafNode extends Node {
         int insertPos = -pos - 1;
         keys.add(insertPos, key);
         values.add(insertPos, value);
-        if (this==tree.root && tree.root.isOverFlow()) {
-            Node siblingNode = split();
+        if (this==tree.root && tree.root.IsOverFlow()) {
+            Node siblingNode = Split();
             InternalNode newRoot = new InternalNode();
-            newRoot.keys.add(siblingNode.getFirstKey());
+            newRoot.keys.add(siblingNode.GetFirstKey());
             newRoot.children.addAll(Arrays.asList(this, siblingNode));
             tree.root = newRoot;
         }
     }
 
     @Override
-    int remove(String key, BPlusTree tree) {
+    int Remove(String key, BPlusTree tree) {
         int pos = Utils.binarySearch(keys, key);
         if (pos >= 0) {
             keys.remove(pos);
@@ -62,8 +62,8 @@ public class LeafNode extends Node {
     }
 
     @Override
-    Node split() {
-        int from = size() / 2, to = size();
+    Node Split() {
+        int from = Size() / 2, to = Size();
         List<String> subKeys = keys.subList(from, to);
         List<Integer> subValues = values.subList(from, to);
         LeafNode siblingNode = new LeafNode(subKeys, subValues);
@@ -76,21 +76,21 @@ public class LeafNode extends Node {
     }
 
     @Override
-    void merge(Node node) {
+    void Merge(Node node) {
         LeafNode mergeNode = (LeafNode) node;
         this.keys.addAll(mergeNode.keys);
         this.values.addAll(mergeNode.values);
     }
 
     @Override
-    String getFirstKey() {
+    String GetFirstKey() {
         return keys.get(0);
     }
 
     @Override
     int[] TotalEntries(){
         int[] entries = new int[2];
-        entries[0] = this.size();
+        entries[0] = this.Size();
         return entries;
     }
 

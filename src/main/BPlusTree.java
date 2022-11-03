@@ -37,21 +37,21 @@ public class BPlusTree {
         return str.toString();
     }
 
-    public List<SearchResult> search(String key1, String key2) {
-            Node left = root.getSearchNode(key1);
+    public List<SearchResult> Search(String key1, String key2) {
+            Node left = root.GetSearchNode(key1);
             int pos = Utils.binarySearch(left.keys, key1);
             if(pos<0) pos = -pos - 1;
             String search = left.keys.get(pos);
             List<SearchResult> results  = new LinkedList<>();
             while(search.compareTo(key2)<=0){
                 results.add(new SearchResult(search, ((LeafNode) left).getValues().get(pos)));
-                if(pos<left.size()-1){
+                if(pos<left.Size()-1){
                     pos++;
-                    search = left.indexOfKey(pos);
+                    search = left.IndexOfKey(pos);
                 }else {
                     left = ((LeafNode) left).next;
                     pos = 0;
-                    search = left.indexOfKey(pos);
+                    search = left.IndexOfKey(pos);
                 }
             }
             return results;
@@ -59,11 +59,11 @@ public class BPlusTree {
     }
 
     public void put(String key, int value) {
-        root.putVal(key, value, this);
+        root.PutVal(key, value, this);
     }
 
-    public int remove(String key) {
-        int success = root.remove(key,this);
+    public int Remove(String key) {
+        int success = root.Remove(key,this);
         if(success == -1){
             System.out.println("The key: " + key + " deleted failed. The key is not found in the tree! Please check!");
         }
@@ -85,13 +85,13 @@ public class BPlusTree {
 
     private void PrintDumpStatistics(String[] data){
         if(data.length != 5) return;
-        System.out.println("Total number of nodes in the tree: " + data[0]);
-        System.out.println("Total number of data entries in the tree: " + data[1]);
-        System.out.println("Total number of index entries in the tree: " + data[2]);
-        System.out.println("Average fill-factor of the nodes is: " + data[3]);
-        System.out.println("The height of the tree is: " + data[4]);
+        System.out.println("Statistics of the B+-tree: ");
+        System.out.println("Total number of nodes: " + data[0]);
+        System.out.println("Total number of data entries: " + data[1]);
+        System.out.println("Total number of index entries: " + data[2]);
+        System.out.println("Average fill factor: " + data[3]);
+        System.out.println("Height of tree: " + data[4]);
         System.out.println();
-
     }
 
 

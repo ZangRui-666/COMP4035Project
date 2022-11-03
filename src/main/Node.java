@@ -11,22 +11,22 @@ public abstract class Node {
         this.keys = new ArrayList<>(maxEntries);
     }
 
-    abstract Node getSearchNode(String key);
+    abstract Node GetSearchNode(String key);
 
-    String indexOfKey(int index){
+    String IndexOfKey(int index){
         return keys.get(index);
     }
 
 
-    abstract void putVal(String key, int value, BPlusTree tree);
+    abstract void PutVal(String key, int value, BPlusTree tree);
 
-    abstract int remove(String key, BPlusTree tree);
+    abstract int Remove(String key, BPlusTree tree);
 
-    abstract Node split();
+    abstract Node Split();
 
-    abstract void merge(Node node);
+    abstract void Merge(Node node);
 
-    abstract String getFirstKey();
+    abstract String GetFirstKey();
 
     abstract int[] TotalEntries();
 
@@ -41,23 +41,23 @@ public abstract class Node {
     abstract void AddVal(String key, int value);
 
     float GetFillFactor(){
-        return (float) this.size()/(float) maxEntries;
+        return (float) this.Size()/(float) maxEntries;
     }
 
-    int size() {
+    int Size() {
         return keys.size();
     }
 
-    boolean isOverFlow() {
-        return size() > maxEntries;
+    boolean IsOverFlow() {
+        return Size() > maxEntries;
     }
 
     boolean IsUnderFlow() {
-        return size() < maxEntries / 2;
+        return Size() < maxEntries / 2;
     }
 
     boolean IsRedundant(){
-        return this.size() >= ((maxEntries/2) + 1);
+        return this.Size() >= ((maxEntries/2) + 1);
     }
 
     @Override

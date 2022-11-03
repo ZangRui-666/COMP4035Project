@@ -86,15 +86,15 @@ public class Test {
 //        tree.put("ej", 1);
 //        tree.put("ek", 1);
         System.out.println(tree);
-        tree.remove("ad");
+        tree.Remove("ad");
         System.out.println(tree);
-        tree.remove("ac");
+        tree.Remove("ac");
         System.out.println(tree);
-        tree.remove("cf");
+        tree.Remove("cf");
         System.out.println(tree);
-        tree.remove("bd");
+        tree.Remove("bd");
         System.out.println(tree);
-        tree.remove("asdjna");
+        tree.Remove("asdjna");
         System.out.println(tree);
     }
 
@@ -195,36 +195,39 @@ public class Test {
         tree.put("cz", 1);
         tree.put("ck", 1);
         System.out.println(tree);
+        tree.Remove("ad");
+        tree.Remove("bd");
+        System.out.println(tree);
 
-        tree.remove("cc");
-        tree.remove("cn");
-        tree.remove("cl");
-        tree.remove("cz");
-        tree.remove("ck");
-        tree.remove("eg");
-        tree.remove("eh");
-        tree.remove("ei");
-        tree.remove("ej");
-        tree.remove("ek");
+        tree.Remove("cc");
+        tree.Remove("cn");
+        tree.Remove("cl");
+        tree.Remove("cz");
+        tree.Remove("ck");
+        tree.Remove("eg");
+        tree.Remove("eh");
+        tree.Remove("ei");
+        tree.Remove("ej");
+        tree.Remove("ek");
         System.out.println(before2.equals(tree.toString()));
-        tree.remove("ko");
-        tree.remove("ka");
-        tree.remove("kc");
-        tree.remove("kb");
-        tree.remove("kp");
-        tree.remove("kl");
-        tree.remove("kk");
-        tree.remove("kr");
-        tree.remove("ed");
-        tree.remove("ee");
-        tree.remove("ef");
+        tree.Remove("ko");
+        tree.Remove("ka");
+        tree.Remove("kc");
+        tree.Remove("kb");
+        tree.Remove("kp");
+        tree.Remove("kl");
+        tree.Remove("kk");
+        tree.Remove("kr");
+        tree.Remove("ed");
+        tree.Remove("ee");
+        tree.Remove("ef");
         System.out.println(before1.equals(tree.toString()));
     }
 
     void testGet(BPlusTree tree) {
         //for test purpose, these tow value are set to 10 while others are 1
-        System.out.println(tree.search("ka", "kp"));
-        System.out.println(tree.search("ia", "ub"));
+        System.out.println(tree.Search("ka", "kp"));
+        System.out.println(tree.Search("ia", "ub"));
     }
 
 }
