@@ -1,41 +1,43 @@
 package main;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class MainRun {
-    public static void main(String[] args){
+    public static void main(String[] args)   {
         new MainRun().RunApp();
     }
-    public void RunApp(){
+
+    public void RunApp()  {
         Scanner in = new Scanner(System.in);
         boolean quit = false;
         BPlusTree tree = new BPlusTree();
         System.out.print("> ");
-        while (!quit){
-            if(in.hasNext()){
+        while (!quit) {
+            if (in.hasNextLine()) {
                 String[] input = in.nextLine().split(" ");
-                if(input.length == 2) {
+                if (input.length == 2) {
                     switch (input[0]) {
                         case "btree":
-                            switch (input[1]){
+                            switch (input[1]) {
                                 case "-help":
                                     System.out.println("Usage: btree [fname]");
                                     System.out.println("fname: the name of the data file storing the search key values");
                                     break;
                                 default:
-                                    try{
+                                    try {
                                         File inputFile = new File(input[1]);
-                                        if(!inputFile.exists())
-                                            System.out.println("The input path is not exist, please check!");
-                                        //todo: add btree build function
+                                        if (!inputFile.exists())
+                                            System.out.println("The input path does not exist, please check!");
+                                            //todo: add btree build function
                                         else {
-                                            System.out.println("Building an initial B+-tree... Launching the B+-tree test program…");
+                                            System.out.println("Building an initial B+-tree... Launching the B+-tree test program...");
                                             tree = new BPlusTree(inputFile);
                                             System.out.println("Waiting for your commands: ");
                                         }
-                                    }catch (Exception e){
-                                        System.out.println(e);
+                                    } catch (FileNotFoundException e) {
+                                        System.out.println(e.getMessage());
                                     }
 
                             }
@@ -50,7 +52,7 @@ public class MainRun {
                         default:
                             System.out.println("Invalid input format.");
                     }
-                }else if(input.length == 1){
+                } else if (input.length == 1) {
                     switch (input[0]) {
                         case "print":
                             System.out.println(tree);
@@ -65,9 +67,11 @@ public class MainRun {
                         default:
                             System.out.println("Invalid input format.");
                     }
-                }else if(input.length == 3){
-                    System.out.println(tree.Search(input[1], input[2]));
-                }else System.out.println("Invalid input format.");
+                } else if (input.length == 3) {
+                    if (input[0].equals("search"))
+                        System.out.println(tree.Search(input[1], input[2]));
+                    else System.out.println("Invalid input format.");
+                } else System.out.println("Invalid input format.");
             }
             System.out.print("> ");
         }
