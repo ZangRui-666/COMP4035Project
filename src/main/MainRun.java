@@ -11,9 +11,10 @@ public class MainRun {
         Scanner in = new Scanner(System.in);
         boolean quit = false;
         BPlusTree tree = new BPlusTree();
+        System.out.print("> ");
         while (!quit){
             if(in.hasNext()){
-                String[] input = in.next().split(" ");
+                String[] input = in.nextLine().split(" ");
                 if(input.length == 2) {
                     switch (input[0]) {
                         case "btree":
@@ -28,13 +29,20 @@ public class MainRun {
                                         if(!inputFile.exists())
                                             System.out.println("The input path is not exist, please check!");
                                         //todo: add btree build function
+                                        else {
+                                            System.out.println("Building an initial B+-tree... Launching the B+-tree test program…");
+                                            tree = new BPlusTree(inputFile);
+                                            System.out.println("Waiting for your commands: ");
+                                        }
                                     }catch (Exception e){
                                         System.out.println(e);
                                     }
+
                             }
                             break;
                         case "insert":
                             tree.put(input[1], 0);
+                            System.out.println("The key " + input[1] + " has been inserted in the B+-tree!");
                             break;
                         case "delete":
                             tree.Remove(input[1]);
@@ -52,14 +60,16 @@ public class MainRun {
                             break;
                         case "quit":
                             quit = true;
+                            System.out.println("The program is terminated.");
                             break;
                         default:
                             System.out.println("Invalid input format.");
                     }
                 }else if(input.length == 3){
-                    tree.Search(input[1], input[2]);
+                    System.out.println(tree.Search(input[1], input[2]));
                 }else System.out.println("Invalid input format.");
             }
+            System.out.print("> ");
         }
         in.close();
     }

@@ -1,5 +1,7 @@
 package main;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 
@@ -9,6 +11,18 @@ public class BPlusTree {
     public BPlusTree() {
         root = new LeafNode();
     }
+
+    public BPlusTree(File inputFile) throws FileNotFoundException {
+        Scanner fileScanner = new Scanner(inputFile);
+        root = new LeafNode();
+        while (fileScanner.hasNext()){
+            String key =fileScanner.nextLine();
+            //assume the value is always 0
+            this.put(key, 0);
+        }
+        fileScanner.close();
+    }
+
 
     public void setRoot(Node root) {
         this.root = root;
@@ -66,6 +80,7 @@ public class BPlusTree {
         int success = root.Remove(key,this);
         if(success == -1){
             System.out.println("The key: " + key + " is not in the B+-tree.");
+            return success;
         }
         System.out.println("The key "+ key +" has been deleted in the B+-tree.");
         return success;
