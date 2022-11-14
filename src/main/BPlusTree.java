@@ -73,6 +73,27 @@ public class BPlusTree {
 
     }
 
+    public List<SearchResult> PrefixSearch(String prefix){
+        Node left = root.GetSearchNode(prefix);
+        int pos = Utils.binarySearch(left.keys, prefix);
+        if (pos < 0) pos = -pos - 1;
+        String search = left.keys.get(pos);
+        List<SearchResult> results = new LinkedList<>();
+        while (search.startsWith(prefix)){
+            results.add(new SearchResult(search, ((LeafNode) left).getValues().get(pos)));
+            if (pos < left.Size() - 1) {
+                pos++;
+            } else {
+                left = ((LeafNode) left).next;
+                pos = 0;
+                if(left==null)
+                    break;
+            }
+            search = left.IndexOfKey(pos);
+        }
+        return results;
+    }
+
     public void put(String key, int value) {
         root.PutVal(key, value, this);
     }

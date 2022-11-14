@@ -19,7 +19,7 @@ public class MainRun {
                 String[] input = inputCommand.split(" ");
                 if (input.length > 1) {
                     switch (input[0]) {
-                        case "btree":
+                        case "tree":
                             String remainStr = inputCommand.substring(input[0].length() + 1);
                             System.out.println("This is the remian Str :" + remainStr);
                             if ("-help".equals(remainStr)) {
@@ -69,7 +69,7 @@ public class MainRun {
                             if (input.length != 2)
                                 System.out.println("Invalid input format.");
                             else{
-                                String key2 = input[1];
+                                System.out.println(tree.PrefixSearch(input[1]));
 
                             }
                         default:

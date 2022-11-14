@@ -8,3 +8,6 @@ lemon
 orange
 apple
 watermelon
+teach
+teaching
+teaaab
