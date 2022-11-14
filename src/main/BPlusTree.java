@@ -15,8 +15,8 @@ public class BPlusTree {
     public BPlusTree(File inputFile) throws FileNotFoundException {
         Scanner fileScanner = new Scanner(inputFile);
         root = new LeafNode();
-        while (fileScanner.hasNext()){
-            String key =fileScanner.nextLine();
+        while (fileScanner.hasNext()) {
+            String key = fileScanner.nextLine();
             //assume the value is always 0
             this.put(key, 0);
         }
@@ -52,23 +52,24 @@ public class BPlusTree {
     }
 
     public List<SearchResult> Search(String key1, String key2) {
-            Node left = root.GetSearchNode(key1);
-            int pos = Utils.binarySearch(left.keys, key1);
-            if(pos<0) pos = -pos - 1;
-            String search = left.keys.get(pos);
-            List<SearchResult> results  = new LinkedList<>();
-            while(search.compareTo(key2)<=0){
-                results.add(new SearchResult(search, ((LeafNode) left).getValues().get(pos)));
-                if(pos<left.Size()-1){
-                    pos++;
-                    search = left.IndexOfKey(pos);
-                }else {
-                    left = ((LeafNode) left).next;
-                    pos = 0;
-                    search = left.IndexOfKey(pos);
-                }
+        Node left = root.GetSearchNode(key1);
+        int pos = Utils.binarySearch(left.keys, key1);
+        if (pos < 0) pos = -pos - 1;
+        String search = left.keys.get(pos);
+        List<SearchResult> results = new LinkedList<>();
+        while (search.compareTo(key2) <= 0) {
+            results.add(new SearchResult(search, ((LeafNode) left).getValues().get(pos)));
+            if (pos < left.Size() - 1) {
+                pos++;
+            } else {
+                left = ((LeafNode) left).next;
+                pos = 0;
+                if(left==null)
+                    break;
             }
-            return results;
+            search = left.IndexOfKey(pos);
+        }
+        return results;
 
     }
 
@@ -77,16 +78,16 @@ public class BPlusTree {
     }
 
     public int Remove(String key) {
-        int success = root.Remove(key,this);
-        if(success == -1){
+        int success = root.Remove(key, this);
+        if (success == -1) {
             System.out.println("The key: " + key + " is not in the B+-tree.");
             return success;
         }
-        System.out.println("The key "+ key +" has been deleted in the B+-tree.");
+        System.out.println("The key " + key + " has been deleted in the B+-tree.");
         return success;
     }
 
-    public void DumpStatistics(){
+    public void DumpStatistics() {
         //0: total number of node, 1: total number of data entries, 2: total number of index entries
         //3: Avg fill-factor of nodes, 4: height of tree
         String[] dataSet = new String[5];
@@ -99,8 +100,8 @@ public class BPlusTree {
         PrintDumpStatistics(dataSet);
     }
 
-    private void PrintDumpStatistics(String[] data){
-        if(data.length != 5) return;
+    private void PrintDumpStatistics(String[] data) {
+        if (data.length != 5) return;
         System.out.println("Statistics of the B+-tree: ");
         System.out.println("Total number of nodes: " + data[0]);
         System.out.println("Total number of data entries: " + data[1]);
@@ -109,7 +110,6 @@ public class BPlusTree {
         System.out.println("Height of tree: " + data[4]);
         System.out.println();
     }
-
 
 
 }
