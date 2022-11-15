@@ -51,6 +51,14 @@ public class BPlusTree {
         return str.toString();
     }
 
+    public boolean Update(String key, String value){
+        Node search = root.GetSearchNode(key);
+        int pos = Utils.binarySearch(search.keys, key);
+        if (pos < 0) return false;
+        ((LeafNode) search).getValues().set(pos, Integer.valueOf(value));
+        return true;
+    }
+
     public List<SearchResult> Search(String key1, String key2) {
         Node left = root.GetSearchNode(key1);
         int pos = Utils.binarySearch(left.keys, key1);
@@ -94,8 +102,8 @@ public class BPlusTree {
         return results;
     }
 
-    public void put(String key, int value) {
-        root.PutVal(key, value, this);
+    public boolean put(String key, int value) {
+        return root.PutVal(key, value, this);
     }
 
     public int Remove(String key) {

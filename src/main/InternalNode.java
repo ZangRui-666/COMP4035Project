@@ -28,11 +28,12 @@ public class InternalNode extends Node {
     }
 
     @Override
-    void PutVal(String key, int value, BPlusTree tree) {
+    boolean PutVal(String key, int value, BPlusTree tree) {
         int pos = Utils.binarySearch(keys, key);
         int childPos = pos >= 0 ? pos + 1 : -pos - 1;
         Node child = GetChild(childPos);
-        child.PutVal(key, value, tree);
+        if(!child.PutVal(key, value, tree))
+            return false;
         if (child.IsOverFlow()) {
             Node siblingNode = child.Split();
             InsertChild(siblingNode);
@@ -47,6 +48,7 @@ public class InternalNode extends Node {
             newRoot.children.addAll(Arrays.asList(this, siblingNode));
             tree.setRoot(newRoot);
         }
+        return true;
     }
 
     @Override

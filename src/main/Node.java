@@ -18,7 +18,7 @@ public abstract class Node {
     }
 
 
-    abstract void PutVal(String key, int value, BPlusTree tree);
+    abstract boolean PutVal(String key, int value, BPlusTree tree);
 
     abstract int Remove(String key, BPlusTree tree);
 

@@ -3,7 +3,6 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class LeafNode extends Node {
@@ -32,11 +31,11 @@ public class LeafNode extends Node {
     }
 
     @Override
-    void PutVal(String key, int value, BPlusTree tree) {
+    boolean PutVal(String key, int value, BPlusTree tree) {
         int pos = Utils.binarySearch(keys, key);
         if (pos >= 0) {
-            values.set(pos, value);
-            return;
+//            values.set(pos, value);
+            return false;
         }
         int insertPos = -pos - 1;
         keys.add(insertPos, key);
@@ -48,6 +47,7 @@ public class LeafNode extends Node {
             newRoot.children.addAll(Arrays.asList(this, siblingNode));
             tree.root = newRoot;
         }
+        return true;
     }
 
     @Override

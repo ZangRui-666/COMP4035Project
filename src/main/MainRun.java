@@ -2,6 +2,7 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Scanner;
 
 public class MainRun {
@@ -44,8 +45,10 @@ public class MainRun {
                             if (input.length != 2) {
                                 System.out.println("Invalid input format.");
                             } else {
-                                tree.put(input[1], 0);
-                                System.out.println("The key " + input[1] + " has been inserted in the B+-tree!");
+                                if (tree.put(input[1], 0))
+                                    System.out.println("The key " + input[1] + " has been inserted in the B+-tree!");
+                                else
+                                    System.out.println("The key " + input[1] + " is duplicated, you can use update command to update the valuein");
                             }
                             break;
                         case "delete":
@@ -53,6 +56,17 @@ public class MainRun {
                                 System.out.println("Invalid input format.");
                             } else
                                 tree.Remove(input[1]);
+                            break;
+
+                        case "update":
+                            if (input.length != 3) {
+                                System.out.println("Invalid input format.");
+                            }
+                            else {
+                                if (tree.Update(input[1], input[2]))
+                                    System.out.println("Update successfully");
+                                else System.out.println("Key not found");
+                            }
                             break;
                         case "search":
                             if (input.length > 3) {
@@ -68,7 +82,7 @@ public class MainRun {
                         case "fuzzysearch":
                             if (input.length != 2)
                                 System.out.println("Invalid input format.");
-                            else{
+                            else {
                                 System.out.println(tree.PrefixSearch(input[1]));
 
                             }
