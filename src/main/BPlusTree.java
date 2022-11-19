@@ -8,17 +8,39 @@ import java.util.*;
 public class BPlusTree {
     public Node root;
 
+
     public BPlusTree() {
         root = new LeafNode();
     }
 
+    public void ClearTree(){
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                Node node = queue.poll();
+                if (node instanceof InternalNode) {
+                    queue.addAll(((InternalNode) node).children);
+                    ((InternalNode)node).children.clear();
+                }else {
+                    assert node != null;
+                    ((LeafNode)node).values.clear();
+                    ((LeafNode)node).previous = null;
+                    ((LeafNode)node).next = null;
+                }
+                node.keys.clear();
+            }
+        }
+        setRoot(new LeafNode());
+    }
     public BPlusTree(File inputFile) throws FileNotFoundException {
         Scanner fileScanner = new Scanner(inputFile);
         root = new LeafNode();
         while (fileScanner.hasNext()) {
             String key = fileScanner.nextLine();
             //assume the value is always 0
-            this.put(key, 0);
+            this.Insert(key, 0);
         }
         fileScanner.close();
     }
@@ -31,7 +53,7 @@ public class BPlusTree {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
-        Queue<Node> queue = new ArrayDeque<>();
+        Queue<Node> queue = new LinkedList<>();
         queue.add(root);
         while (!queue.isEmpty()) {
             int size = queue.size();
@@ -102,7 +124,7 @@ public class BPlusTree {
         return results;
     }
 
-    public boolean put(String key, int value) {
+    public boolean Insert(String key, int value) {
         return root.PutVal(key, value, this);
     }
 
