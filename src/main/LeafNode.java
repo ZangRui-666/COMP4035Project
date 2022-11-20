@@ -6,10 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LeafNode extends Node {
-    public List<Integer> getValues() {
-        return values;
-    }
-
     List<Integer> values;
     LeafNode next;
     LeafNode previous;
@@ -23,6 +19,10 @@ public class LeafNode extends Node {
         this();
         this.keys.addAll(keys);
         this.values.addAll(values);
+    }
+
+    public List<Integer> getValues() {
+        return values;
     }
 
     @Override

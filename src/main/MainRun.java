@@ -85,6 +85,7 @@ public class MainRun {
                                 System.out.println(tree.PrefixSearch(input[1]));
 
                             }
+                            break;
                         default:
                             System.out.println("Invalid input format.");
                     }
