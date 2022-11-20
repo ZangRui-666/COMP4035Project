@@ -53,8 +53,13 @@ public class MainRun {
                         case "delete":
                             if (input.length != 2) {
                                 System.out.println("Invalid input format.");
-                            } else
-                                tree.Remove(input[1]);
+                            } else {
+                                boolean result = tree.Remove(input[1]);
+                                if (!result) {
+                                    System.out.println("The key: " + input[1] + " is not in the B+-tree.");
+                                }
+                                else System.out.println("The key " + input[1] + " has been deleted in the B+-tree.");
+                            }
                             break;
 
                         case "update":

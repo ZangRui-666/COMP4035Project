@@ -6,14 +6,19 @@ import java.util.*;
 
 
 public class BPlusTree {
-    public Node root;
 
+    public Node root;
 
     public BPlusTree() {
         root = new LeafNode();
     }
 
-    public void ClearTree(){
+    /**
+     * Use level order traversal of the tree,
+     * to clear all the nodes in the tree and set the mutual reference to null,
+     * so that the memory will be cleaned.
+     */
+    public void ClearTree() {
         Queue<Node> queue = new LinkedList<>();
         queue.add(root);
         while (!queue.isEmpty()) {
@@ -22,18 +27,25 @@ public class BPlusTree {
                 Node node = queue.poll();
                 if (node instanceof InternalNode) {
                     queue.addAll(((InternalNode) node).children);
-                    ((InternalNode)node).children.clear();
-                }else {
+                    ((InternalNode) node).children.clear();
+                } else {
                     assert node != null;
-                    ((LeafNode)node).values.clear();
-                    ((LeafNode)node).previous = null;
-                    ((LeafNode)node).next = null;
+                    ((LeafNode) node).values.clear();
+                    ((LeafNode) node).previous = null;
+                    ((LeafNode) node).next = null;
                 }
                 node.keys.clear();
             }
         }
         setRoot(new LeafNode());
     }
+
+    /**
+     * Construct the tree according to the input file
+     *
+     * @param inputFile the file of data
+     * @throws FileNotFoundException if no such file is found
+     */
     public BPlusTree(File inputFile) throws FileNotFoundException {
         Scanner fileScanner = new Scanner(inputFile);
         root = new LeafNode();
@@ -50,6 +62,11 @@ public class BPlusTree {
         this.root = root;
     }
 
+    /**
+     * Use level order traversal of the tree to print the structure of the tree
+     *
+     * @return String representation of the tree
+     */
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
@@ -63,6 +80,7 @@ public class BPlusTree {
                 if (i > 0) {
                     s.append(",");
                 }
+                assert node != null;
                 s.append(node.keys.toString());
                 if (node instanceof InternalNode) {
                     queue.addAll(((InternalNode) node).children);
@@ -73,7 +91,14 @@ public class BPlusTree {
         return str.toString();
     }
 
-    public boolean Update(String key, String value){
+    /**
+     * Update the value of the specific key
+     *
+     * @param key   the key to search
+     * @param value the value after update
+     * @return true, if the key was found. false, if the key was not found.
+     */
+    public boolean Update(String key, String value) {
         Node search = root.GetSearchNode(key);
         int pos = Utils.binarySearch(search.keys, key);
         if (pos < 0) return false;
@@ -81,12 +106,20 @@ public class BPlusTree {
         return true;
     }
 
+    /**
+     * Search the result of a specific range
+     *
+     * @param key1 the left boundary
+     * @param key2 the left boundary
+     * @return List of SearchResult
+     */
     public List<SearchResult> Search(String key1, String key2) {
         Node left = root.GetSearchNode(key1);
         int pos = Utils.binarySearch(left.keys, key1);
         if (pos < 0) pos = -pos - 1;
-        String search = left.keys.get(pos);
+        String search = left.keys.get(pos); // get the first result
         List<SearchResult> results = new LinkedList<>();
+        // linear search to the right
         while (search.compareTo(key2) <= 0) {
             results.add(new SearchResult(search, ((LeafNode) left).getValues().get(pos)));
             if (pos < left.Size() - 1) {
@@ -94,7 +127,7 @@ public class BPlusTree {
             } else {
                 left = ((LeafNode) left).next;
                 pos = 0;
-                if(left==null)
+                if (left == null)
                     break;
             }
             search = left.IndexOfKey(pos);
@@ -103,20 +136,27 @@ public class BPlusTree {
 
     }
 
-    public List<SearchResult> PrefixSearch(String prefix){
+    /**
+     * Search by the prefix of a String
+     *
+     * @param prefix the prefix for search
+     * @return List of SearchResult
+     */
+    public List<SearchResult> PrefixSearch(String prefix) {
         Node left = root.GetSearchNode(prefix);
         int pos = Utils.binarySearch(left.keys, prefix);
         if (pos < 0) pos = -pos - 1;
-        String search = left.keys.get(pos);
+        String search = left.keys.get(pos); // get the first search result
         List<SearchResult> results = new LinkedList<>();
-        while (search.startsWith(prefix)){
+        // linear search to the right
+        while (search.startsWith(prefix)) {
             results.add(new SearchResult(search, ((LeafNode) left).getValues().get(pos)));
             if (pos < left.Size() - 1) {
                 pos++;
             } else {
                 left = ((LeafNode) left).next;
                 pos = 0;
-                if(left==null)
+                if (left == null)
                     break;
             }
             search = left.IndexOfKey(pos);
@@ -124,20 +164,26 @@ public class BPlusTree {
         return results;
     }
 
+    /**
+     * Insert the key-value pair to the tree
+     *
+     * @return true, if inserted successfully. false, if duplicate.
+     */
     public boolean Insert(String key, int value) {
         return root.PutVal(key, value, this);
     }
 
-    public int Remove(String key) {
-        int success = root.Remove(key, this);
-        if (success == -1) {
-            System.out.println("The key: " + key + " is not in the B+-tree.");
-            return success;
-        }
-        System.out.println("The key " + key + " has been deleted in the B+-tree.");
-        return success;
+    /**
+     * Remove a specific key from the tree
+     * @return true, if deleted successfully. false, if the key nonexistent.
+     */
+    public boolean Remove(String key) {
+        return root.Remove(key, this);
     }
 
+    /**
+     * Get the statistics of the tree
+     */
     public void DumpStatistics() {
         //0: total number of node, 1: total number of data entries, 2: total number of index entries
         //3: Avg fill-factor of nodes, 4: height of tree

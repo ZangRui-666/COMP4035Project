@@ -52,14 +52,14 @@ public class InternalNode extends Node {
     }
 
     @Override
-    int Remove(String key, BPlusTree tree) {
+    boolean Remove(String key, BPlusTree tree) {
         int pos = Utils.binarySearch(keys, key);
 //        int childPos = pos >= 0 ? pos + 1 : Math.min(-pos, Size()) - 1;
         int childPos = pos >= 0 ? pos + 1 : -pos - 1;
-        int success = 1;
+        boolean success;
         Node child = GetChild(childPos);
         success = child.Remove(key, tree);
-        if(success == -1) return success;
+        if(!success) return false;
         if(child.IsUnderFlow()){
             Node leftNode = null, rightNode = null, brotherNode = null;
             int leRi = 0;
@@ -101,7 +101,7 @@ public class InternalNode extends Node {
                 }
             }
         }
-        return 1;
+        return true;
     }
 
     @Override

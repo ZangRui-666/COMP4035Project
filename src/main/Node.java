@@ -11,6 +11,11 @@ public abstract class Node {
         this.keys = new ArrayList<>(maxEntries);
     }
 
+    /**
+     * Get the node which may contain the search key
+     * @param key search key
+     * @return the Node which may containing the key
+     */
     abstract Node GetSearchNode(String key);
 
     String IndexOfKey(int index){
@@ -20,7 +25,7 @@ public abstract class Node {
 
     abstract boolean PutVal(String key, int value, BPlusTree tree);
 
-    abstract int Remove(String key, BPlusTree tree);
+    abstract boolean Remove(String key, BPlusTree tree);
 
     abstract Node Split();
 
