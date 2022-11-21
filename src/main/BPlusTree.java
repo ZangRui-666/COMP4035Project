@@ -1,11 +1,10 @@
 package main;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.*;
 
 
-public class BPlusTree {
+public class BPlusTree implements Serializable {
 
     public Node root;
 
@@ -57,6 +56,30 @@ public class BPlusTree {
         fileScanner.close();
     }
 
+
+
+    public Object ReadTree(String fName) throws IOException, ClassNotFoundException {
+        Object temp;
+        File file =new File(fName + ".dat");
+        FileInputStream in;
+        in = new FileInputStream(file);
+        ObjectInputStream objIn=new ObjectInputStream(in);
+        temp=objIn.readObject();
+        objIn.close();
+        System.out.println("read object success!");
+        return temp;
+    }
+
+    public void Save(String fName) throws IOException {
+        File file =new File(fName+".dat");
+        FileOutputStream out;
+        out = new FileOutputStream(file);
+        ObjectOutputStream objOut=new ObjectOutputStream(out);
+        objOut.writeObject(this);
+        objOut.flush();
+        objOut.close();
+        System.out.println("write object success!");
+    }
 
     public void setRoot(Node root) {
         this.root = root;

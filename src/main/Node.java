@@ -1,9 +1,10 @@
 package main;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Node {
+public abstract class Node implements Serializable {
     List<String> keys;
     int maxEntries = 4;
 

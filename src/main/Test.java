@@ -1,9 +1,10 @@
 package main;
 
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 
 public class Test {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         new Test().test();
         //new Test().zzyTest();
     }
@@ -98,7 +99,8 @@ public class Test {
         System.out.println(tree);
     }
 
-    public void test() {
+    public void test() throws FileNotFoundException {
+        Utils.SplitToNode("1");
         BPlusTree tree = new BPlusTree();
         tree.Insert("ad", 1);
         System.out.println(tree);
@@ -125,6 +127,7 @@ public class Test {
         tree.Insert("ue", 1);
         tree.Insert("ub", 1);
         tree.Insert("up", 1);
+        System.out.println("save" + tree.toString());
         System.out.println(tree);
         tree.DumpStatistics();
         tree.Insert("gh", 1);
