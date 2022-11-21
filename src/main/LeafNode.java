@@ -52,11 +52,11 @@ public class LeafNode extends Node {
 
     @Override
     boolean Remove(String key, BPlusTree tree) {
-        if(!this.keys.contains(key)) return -1;
+        if(!this.keys.contains(key)) return false;
         int pos = this.keys.indexOf(key);
         this.keys.remove(pos);
         this.values.remove(pos);
-        return 1;
+        return true;
     }
 
     @Override

@@ -1,13 +1,4 @@
 crab
-shrimp
+dog
 fish
-coffee
-tea
-water
-lemon
-orange
-apple
-watermelon
-teach
-teaching
-teaaab
+horse

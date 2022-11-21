@@ -54,7 +54,6 @@ public class InternalNode extends Node {
     @Override
     boolean Remove(String key, BPlusTree tree) {
         int pos = Utils.binarySearch(keys, key);
-//        int childPos = pos >= 0 ? pos + 1 : Math.min(-pos, Size()) - 1;
         int childPos = pos >= 0 ? pos + 1 : -pos - 1;
         boolean success;
         Node child = GetChild(childPos);
@@ -63,25 +62,31 @@ public class InternalNode extends Node {
         if(child.IsUnderFlow()){
             Node leftNode = null, rightNode = null, brotherNode = null;
             int leRi = 0;
+            //exist right node
             if(childPos >=0 && childPos != children.size()-1){
                 rightNode = GetChild(childPos + 1);
+                //right node have redundant node
                 if(rightNode.IsRedundant()){
                     brotherNode = rightNode;
-                    leRi = 1;
+                    leRi = 1;   //brother node is right node
                 }
             }
+            //have no right node, check the left node
             if(childPos != 0 && childPos <=children.size()-1){
                 leftNode = GetChild(childPos-1);
+                //left node have redundant node
                 if(leftNode.IsRedundant()){
                     brotherNode = leftNode;
-                    leRi = -1;
+                    leRi = -1;  //brother node is left node
                 }
             }
 
+            //if brother node have redundant element
             if(brotherNode != null){
                 pos = pos >= 0 ? pos : Math.min(-pos, Size())-1;
+                //borrow a node from brother node
                 Borrow(brotherNode, child, this, childPos, leRi, pos);
-            }else {
+            }else { //brother node have no redundant element
                 if(rightNode != null) {
                     brotherNode = rightNode;
                     leRi = 1;
@@ -90,7 +95,7 @@ public class InternalNode extends Node {
                     leRi = -1;
                 }
                 if(this == tree.root && this.keys.size() < 2) {
-                    child.AddVal(this.keys.get(0), -1);
+                    //child.AddVal(this.keys.get(0), -1);
                     child.Merge(brotherNode);
                     tree.setRoot(child);
                 }else {

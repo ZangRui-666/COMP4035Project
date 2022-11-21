@@ -185,15 +185,13 @@ public class BPlusTree {
      * Get the statistics of the tree
      */
     public void DumpStatistics() {
-        //0: total number of node, 1: total number of data entries, 2: total number of index entries
-        //3: Avg fill-factor of nodes, 4: height of tree
         String[] dataSet = new String[5];
-        dataSet[0] = root.TotalNodes() + "";
+        dataSet[0] = root.TotalNodes() + "";    //0: total number of node
         int[] totalEntries = root.TotalEntries();
-        dataSet[1] = totalEntries[0] + "";
-        dataSet[2] = totalEntries[1] + "";
-        dataSet[3] = root.AvgFillFactor(Integer.parseInt(dataSet[0])) + "%";
-        dataSet[4] = root.GetHeight() + "";
+        dataSet[1] = totalEntries[0] + "";  //1: total number of data entries
+        dataSet[2] = totalEntries[1] + "";  //2: total number of index entries
+        dataSet[3] = root.AvgFillFactor(Integer.parseInt(dataSet[0])) + "%";    //3: Avg fill-factor of nodes
+        dataSet[4] = root.GetHeight() + "";     //4: height of tree
         PrintDumpStatistics(dataSet);
     }
 
