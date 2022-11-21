@@ -95,7 +95,9 @@ public class InternalNode extends Node {
                     leRi = -1;
                 }
                 if(this == tree.root && this.keys.size() < 2) {
-                    //child.AddVal(this.keys.get(0), -1);
+                    if(!(child instanceof LeafNode)){
+                        child.AddVal(this.keys.get(0), -1);
+                    }
                     child.Merge(brotherNode);
                     tree.setRoot(child);
                 }else {
