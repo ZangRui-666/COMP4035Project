@@ -75,7 +75,7 @@ public class MainRun {
                                 if (tree.Insert(input[1], 0))
                                     System.out.println("The key " + input[1] + " has been inserted in the B+-tree!");
                                 else
-                                    System.out.println("The key " + input[1] + " is duplicated, you can use update command to update the valuein");
+                                    System.out.println("The key " + input[1] + " is duplicated, you can use update command to update the value");
                             }
                             break;
                         case "delete":

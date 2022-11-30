@@ -169,6 +169,10 @@ public class BPlusTree implements Serializable {
         Node left = root.GetSearchNode(prefix);
         int pos = Utils.binarySearch(left.keys, prefix);
         if (pos < 0) pos = -pos - 1;
+        if(pos==left.keys.size()) {
+            pos = 0;
+            left = ((LeafNode) left).next;
+        }
         String search = left.keys.get(pos); // get the first search result
         List<SearchResult> results = new LinkedList<>();
         // linear search to the right
